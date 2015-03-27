@@ -35,6 +35,19 @@ int ends[NENDS][2];       /* array of 2D points */
 
 /* Program initialization NOT OpenGL/GLUT dependent,
    as we haven't created a GLUT window yet */
+
+struct line
+  {
+    int x1, x2, y1, y2;
+
+    int x1clip, x2clip, y1clip, y2clip;
+
+    int dx, dy;
+
+    int edgeLeft, edgeRight, edgeBottom, edgeTop;
+
+  }newline;
+
 void
 init(void)
 {
@@ -44,6 +57,7 @@ init(void)
   ends[0][1] = (int)(0.75*height);
   ends[1][0] = (int)(0.75*width);
   ends[1][1] = (int)(0.25*height);
+
 }
 
 void circle(int x, int y, int r)
@@ -86,6 +100,40 @@ void circle(int x, int y, int r)
   glutSwapBuffers();
 }
 
+/*public void drawBackground( GL gl)
+      {
+	gl.glMatrixMode(GL.GL_PROJECTION);
+	gl.glPushMatrix();
+	gl.glOrtho(0, 1, 0, 1, 0, 1);
+
+	gl.glMatrixMode(GL.GL_MODELVIEW);
+	gl.glPushMatrix();
+	gl.glLoadIdentity();
+
+	// No depth buffer writes for background.
+	gl.glDepthMask( false );
+
+	gl.glBindTexture( GL.GL_TEXTURE_2D, textureId[4] );
+	gl.glBegin( GL.GL_QUADS ); {
+	  gl.glTexCoord2f( 0f, 0f );
+	  gl.glVertex2f( 0, 0 );
+	  gl.glTexCoord2f( 0f, 1f );
+	  gl.glVertex2f( 0, 1f );
+	  gl.glTexCoord2f( 1f, 1f );
+	  gl.glVertex2f( 1f, 1f );
+	  gl.glTexCoord2f( 1f, 0f );
+	  gl.glVertex2f( 1f, 0 );
+	} gl.glEnd();
+
+	gl.glDepthMask( true );
+
+	gl.glPopMatrix();
+	gl.glMatrixMode(GL.GL_PROJECTION);
+	gl.glPopMatrix();
+	gl.glMatrixMode(GL.GL_MODELVIEW);
+      }*/
+
+
 void drawSquare()
 {
     glColor3f(0.0, 0.0, 0.0);
@@ -96,6 +144,66 @@ void drawSquare()
 	glVertex2f(400, 200); // The top right corner
  // The bottom right corner
     glEnd();
+
+    newline.edgeLeft = 200;
+    newline.edgeRight=400;
+    newline.edgeBottom = 200;
+    newline.edgeTop=400;
+
+    glutSwapBuffers();
+}
+
+bool Line_Clip_Liang_Barsky()
+{
+    double p, q, r, t0=0.0, t1=1.0;
+
+    for(int edge=0; edge<4; edge++)
+    {
+        if (edge==0) {  p = -newline.dx;    q = -(newline.edgeLeft-newline.x1);  }
+        if (edge==1) {  p = newline.dx;     q =  (newline.edgeRight-newline.x1); }
+        if (edge==2) {  p = -newline.dy;    q = -(newline.edgeBottom-newline.y1);}
+        if (edge==3) {  p = newline.dy;     q =  (newline.edgeTop-newline.y1);   }
+        r = q/p;
+         if(p<0)
+         {
+            if(r>t1)
+                return false;         // Don't draw line at all.
+            else if(r>t0) t0=r;            // Line is clipped!
+        }
+        else if(p>0)
+        {
+            if(r<t0)
+                return false;      // Don't draw line at all.
+            else if(r<t1) t1=r;         // Line is clipped!
+        }
+    }
+
+    newline.x1clip = newline.x1 + t0*newline.dx;
+    newline.y1clip = newline.y1 + t0*newline.dy;
+    newline.x2clip = newline.x1 + t1*newline.dx;
+    newline.y2clip = newline.y1 + t1*newline.dy;
+
+    return true;        // (clipped) line is drawn
+}
+
+void draw_line()
+{
+    newline.x1=100;
+    newline.x2=400;
+    newline.y1=100;
+    newline.y2=400;
+
+    newline.dx = newline.x2-newline.x1;
+    newline.dy = newline.x2-newline.y1;
+
+    if(Line_Clip_Liang_Barsky()==true)
+    {
+        glBegin(GL_LINES);
+        glVertex3f(newline.x1clip, newline.y1clip, 0.0);
+        glVertex3f(newline.x2clip, newline.y2clip, 0.0);
+        glEnd();
+    }
+
     glutSwapBuffers();
 }
 
@@ -104,13 +212,14 @@ void display(void)
   int i;
 
   /* clear the screen to white */
-  glClearColor(1.0, 1.0, 1.0, 0.0);
+  glClearColor(0.4, 2.0, 2.3, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
-
+  glLineWidth(2);
   /* draw a black line */
 
 
   drawSquare();
+  draw_line();
 }
 
 /* Called when window is resized,
