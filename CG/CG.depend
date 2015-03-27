@@ -2,3 +2,10 @@
 1427219018 source:/home/medhini/OpenGL_Project/CG/main.cpp
 	<iostream>
 
+1427452492 source:/home/suryansh/OpenGL_Project/CG/main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+
