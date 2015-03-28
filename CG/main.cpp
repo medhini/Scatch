@@ -1,9 +1,9 @@
-//project
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+//#include <GL/glew.h>
 #if defined(__APPLE__)
-#include <GLUT/glut.h> 
+#include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
@@ -16,6 +16,7 @@ float x, y, r=15, g=9.8, u, theta, ch1=0, ch2 = 0;
 float tof;
 float X[100],Y[100];
 void calc(void);
+float posX = 0, posY = 0, posZ = 0;
 #define PI 3.14159265
 /* Program initialization NOT OpenGL/GLUT dependent,
 as we haven't created a GLUT window yet */
@@ -27,9 +28,24 @@ ends[0][0] = (int)(0.0*width); /* (0,0) is the lower left corner */
 ends[0][1] = (int)(1.0*height);
 ends[1][0] = (int)(1.0*width);
 ends[1][1] = (int)(0.0*height);
-glEnable(GL_DEPTH_TEST);
+glOrtho(-1.0,1.0,-1.0,1.0,-1.0,1.0);
+// Lighting set up
+glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 glEnable(GL_LIGHTING);
 glEnable(GL_LIGHT0);
+
+// Set lighting intensity and color
+GLfloat qaAmbientLight[]	= {100, 100, 100, 1.0};
+GLfloat qaDiffuseLight[]	= {0.8, 0.8, 0.8, 1.0};
+GLfloat qaSpecularLight[]	= {1.0, 1.0, 1.0, 1.0};
+glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+
+// Set the light position
+GLfloat qaLightPosition[]	= {200, 40, 0, 1.0};
+glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
+glEnable(GL_DEPTH_TEST);
 glEnable(GL_COLOR_MATERIAL);
 }
 /* Callback functions for GLUT */
@@ -123,46 +139,32 @@ glEnd();
 
 //glutSwapBuffers();
 }
-void man()
-{
-//Drawing body
-int xpos=400,ypos=400,xdim=200,ydim=200,i,j;
-glBegin(GL_LINES);
-    glColor3f(0,0,0);
-    glVertex2f(xpos, ypos);
-    glVertex2f(xpos - xdim/2, ypos - ydim);             
-    glVertex2f(xpos, ypos);
-    glVertex2f(xpos + xdim/2, ypos - ydim);             
-    glVertex2f(xpos, ypos);
-    glVertex2f(xpos, ypos + ydim);                  
-    glVertex2f(xpos - xdim/2, ypos + ydim/2);
-    glVertex2f(xpos, ypos + ydim);                  
-    glVertex2f(xpos - xdim/2, ypos + ydim/2);       
-    glVertex2f(xpos - xdim/4, ypos + ydim/2);           
-    glVertex2f(xpos - xdim/4, ypos + ydim/2);   
-    glVertex2f(xpos - xdim/4, ypos + ydim/3);   
-    glVertex2f(xpos - xdim/4, ypos + ydim/2);
-    glVertex2f(xpos + xdim, ypos + ydim/2);         
-    glVertex2f(xpos + xdim, ypos + ydim/2);
-    glVertex2f(xpos + xdim, ypos + ydim/3);         
-    glVertex2f(xpos + xdim, ypos + ydim/2);
-    glVertex2f(xpos + xdim + xdim/2, ypos + ydim/2);  
-    glVertex2f(xpos + xdim/2, ypos + ydim/2);
-    glVertex2f(xpos, ypos + ydim);                      
-    glVertex2f(xpos, ypos + ydim + ydim/4);
-    glVertex2f(xpos, ypos + ydim);                      
-glEnd();
 
-//Drawing head
-glBegin(GL_LINE_LOOP); 
-    glColor3f(0,0,0);
-    for (i = 0; i < 100; i++){
-        j = 2*3.14*i/100;
-        glVertex2f(200 + 15 * cos(j), 254 + 15 * sin(j));
-    }
-glEnd();
+void container(){
+    glColor3f(1.0, 0.0, 0.0);
+    glLineWidth(3.0);
+    glBegin(GL_POLYGON);
+    glVertex2d(550,0);
+    glVertex2d(500,70);
+    glVertex2d(650, 70);
+    glVertex2d(600, 0);
+    glEnd();
 }
-
+/*void processSpecialKeys (int key, int mx, int my) {
+    switch(key){
+    case GLUT_KEY_LEFT :
+        if(x_container<400)
+        x_container = x_container-5;
+        glutPostRedisplay();
+        break;
+    case GLUT_KEY_RIGHT :
+        x_container = x_container+5;
+        glutPostRedisplay();
+        break;
+    default:
+        break;
+    }
+}*/
 void wheel(int position)
 {
 int j;
@@ -172,7 +174,7 @@ glBegin(GL_POLYGON);
 
  for( j=0;j<=360;++j)
   {
-	float deg=j*3.14/180;
+float deg=j*3.14/180;
   glVertex2f(position+cos(deg)*50,40+sin(deg)*50);
   }
 
@@ -183,11 +185,11 @@ glFlush();
 void
 display(void) //This function redraws the scene by creating the frames
 {
-
+ glClear(GL_COLOR_BUFFER_BIT);
 if(i<100)
 {
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-glClearColor(1.0, 1.0, 1.0, 0.0);
+glClearColor(0.0,0.0, 1.0, 1.0);
 //sq();
 repeated_draw();
 //sq();
@@ -195,8 +197,12 @@ repeated_draw();
 sq();
 wheel(40);
 wheel(200);
+glPushMatrix();
+glTranslatef(posX, posY, posZ);
+container();
+glPopMatrix();
 glFlush();
-man();
+//man();
 glutSwapBuffers();
 
 }
@@ -217,9 +223,23 @@ glMatrixMode(GL_PROJECTION);
 glLoadIdentity();
 gluOrtho2D(0.0, width, 0.0, height);
 }
+void keyboardown(int key, int x, int y) {
+    switch (key) {
+    case GLUT_KEY_RIGHT:
+        posX += 5;
+        break;
+    case GLUT_KEY_LEFT:
+        posX -= 5;
+        break;
+    default:
+        break;
+    }
+glutPostRedisplay();
+}
 int
 main(int argc, char *argv[])
 {
+
 u=150;
 theta = 4.5;
 calc();
@@ -236,8 +256,11 @@ wd = glutCreateWindow("Club Penguin" /* title */ );
 /* --- register callbacks with GLUT --- */
 /* register function to handle window resizes */
 glutReshapeFunc(reshape);
+//keyboardListener();
+//light();
 /* register function that draws in the window */
 glutDisplayFunc(display);
+glutSpecialFunc(keyboardown);
 /* start the GLUT main loop */
 glutTimerFunc(25, update, 0);
 glutMainLoop();
