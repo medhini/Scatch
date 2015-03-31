@@ -100,40 +100,6 @@ void circle(int x, int y, int r)
   glutSwapBuffers();
 }
 
-/*public void drawBackground( GL gl)
-      {
-	gl.glMatrixMode(GL.GL_PROJECTION);
-	gl.glPushMatrix();
-	gl.glOrtho(0, 1, 0, 1, 0, 1);
-
-	gl.glMatrixMode(GL.GL_MODELVIEW);
-	gl.glPushMatrix();
-	gl.glLoadIdentity();
-
-	// No depth buffer writes for background.
-	gl.glDepthMask( false );
-
-	gl.glBindTexture( GL.GL_TEXTURE_2D, textureId[4] );
-	gl.glBegin( GL.GL_QUADS ); {
-	  gl.glTexCoord2f( 0f, 0f );
-	  gl.glVertex2f( 0, 0 );
-	  gl.glTexCoord2f( 0f, 1f );
-	  gl.glVertex2f( 0, 1f );
-	  gl.glTexCoord2f( 1f, 1f );
-	  gl.glVertex2f( 1f, 1f );
-	  gl.glTexCoord2f( 1f, 0f );
-	  gl.glVertex2f( 1f, 0 );
-	} gl.glEnd();
-
-	gl.glDepthMask( true );
-
-	gl.glPopMatrix();
-	gl.glMatrixMode(GL.GL_PROJECTION);
-	gl.glPopMatrix();
-	gl.glMatrixMode(GL.GL_MODELVIEW);
-      }*/
-
-
 void drawSquare()
 {
     glColor3f(0.0, 0.0, 0.0);
@@ -159,13 +125,14 @@ bool Line_Clip_Liang_Barsky()
 
     for(int edge=0; edge<4; edge++)
     {
-        if (edge==0) {  p = -newline.dx;    q = -(newline.edgeLeft-newline.x1);  }
-        if (edge==1) {  p = newline.dx;     q =  (newline.edgeRight-newline.x1); }
-        if (edge==2) {  p = -newline.dy;    q = -(newline.edgeBottom-newline.y1);}
-        if (edge==3) {  p = newline.dy;     q =  (newline.edgeTop-newline.y1);   }
+        if (edge==0) {  p = -newline.dx;    q = -(newline.edgeLeft-newline.x1);  } //Left
+        if (edge==1) {  p = newline.dx;     q =  (newline.edgeRight-newline.x1); } //Right
+        if (edge==2) {  p = -newline.dy;    q = -(newline.edgeBottom-newline.y1);} //Bottom
+        if (edge==3) {  p = newline.dy;     q =  (newline.edgeTop-newline.y1);   } //Top
+
         r = q/p;
-         if(p<0)
-         {
+        if(p<0)
+        {
             if(r>t1)
                 return false;         // Don't draw line at all.
             else if(r>t0) t0=r;            // Line is clipped!
@@ -189,12 +156,12 @@ bool Line_Clip_Liang_Barsky()
 void draw_line()
 {
     newline.x1=100;
-    newline.x2=400;
-    newline.y1=100;
-    newline.y2=400;
+    newline.x2=500;
+    newline.y1=500;
+    newline.y2=100;
 
     newline.dx = newline.x2-newline.x1;
-    newline.dy = newline.x2-newline.y1;
+    newline.dy = newline.y2-newline.y1;
 
     if(Line_Clip_Liang_Barsky()==true)
     {

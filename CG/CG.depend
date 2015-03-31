@@ -1,4 +1,31 @@
 # depslib dependency file v1.0
-1427219018 source:/home/medhini/OpenGL_Project/CG/main.cpp
+1427832260 source:/home/medhini/OpenGL_Project/CG/main.cpp
+	<stdio.h>
+	<stdlib.h>
 	<iostream>
+	<math.h>
+	<vector>
+	<cstdlib>
+	<algorithm>
+	"Projectile.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+
+1427645130 /home/medhini/OpenGL_Project/CG/Projectile.cpp
+	<math.h>
+	<stdio.h>
+	<algorithm>
+	<vector>
+
+1427832274 source:/home/medhini/OpenGL_Project/CG/Projectile.cpp
+	<math.h>
+	<stdio.h>
+	<iostream>
+	<algorithm>
+	<vector>
+	"Declaration.h"
+
+1427652883 /home/medhini/OpenGL_Project/CG/Declaration.h
+
+1427644035 /home/medhini/OpenGL_Project/CG/Projectile.h
 

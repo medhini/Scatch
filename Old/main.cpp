@@ -19,7 +19,7 @@ using namespace std;
 GLdouble width, height; /* window width and height */
 int wd; /* GLUT window handle */
 int eands[NENDS][2];
-int i=0, coun=0, coun2=0; /* array of 2D points */
+int i=0, coun=0; /* array of 2D points */
 float x, y, r=15, u, theta, ch1=0, ch2 = 0;
 float tof;
 float X[100],Y[100];
@@ -38,10 +38,6 @@ extern pair <int, int> Blue_Path4[500];
 extern pair <int, int> Blue_Path5[500];
 
 extern vector <int> max_distance;
-
-int temp1;
-int temp2;
-int choose_path_red=1, choose_path_blue=1;
 //vector <float> u;
 
 /* Program initialization NOT OpenGL/GLUT dependent,
@@ -114,186 +110,39 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    switch(choose_path_red)
-       {
-            case 1:
 
-            glPushMatrix();
-                glTranslatef(Red_Path1[coun].first, Red_Path1[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
-            glPopMatrix();
-            break;
+    glColor3f(1.0, 0.0, 0.0);
+   // glBegin(GL_POLYGON);
 
-            case 2:
+    glPushMatrix();
+        glTranslatef(Red_Path1[coun].first, Red_Path1[coun].second,0);
+        cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+        glColor3f(1.0, 0.0, 0.0);
+        circle_draw();
+    glPopMatrix();
 
-            glPushMatrix();
-                glTranslatef(Red_Path2[coun].first, Red_Path2[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 3:
-            glPushMatrix();
-                glTranslatef(Red_Path3[coun].first, Red_Path3[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 4:
-            glPushMatrix();
-                glTranslatef(Red_Path4[coun].first, Red_Path4[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 5:
-            glPushMatrix();
-                glTranslatef(Red_Path5[coun].first, Red_Path5[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-    }
-
-    switch(choose_path_blue)
-        {
-            case 1:
-            glPushMatrix();
-                glTranslatef(Blue_Path1[coun2].first, Blue_Path1[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 2:
-            glPushMatrix();
-                glTranslatef(Blue_Path2[coun2].first, Blue_Path2[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 3:
-            glPushMatrix();
-                glTranslatef(Blue_Path3[coun2].first, Blue_Path3[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 4:
-            glPushMatrix();
-                glTranslatef(Blue_Path4[coun2].first, Blue_Path4[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-
-            case 5:
-
-            glPushMatrix();
-                glTranslatef(Blue_Path5[coun2].first, Blue_Path5[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
-                glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
-            glPopMatrix();
-            break;
-        }
-
+    //glEnd();
     glFlush();
     glutSwapBuffers();
 
+ //   glColor3f(0.0, 0.0, 0.0);
+   // glPushMatrix();
+ //   glTranslatef(X2[coun],Y2[coun],0);
+  //  circle_draw();
+//    glPopMatrix();
+
+ //   glFlush();
+ //   glutSwapBuffers();
+
 }
+
 void update(int l) //update function pushes the frames ahead. Calls GlutPostRedisplay
 {
     //i++;
-    if(coun<temp1)
+    if(coun<max_distance[9])
         coun++;
     else
-    {
         coun=0;
-        int k = rand()%5 + 1;
-        switch(k)
-        {
-            case 1:
-                temp1=max_distance[9];
-                choose_path_red=1;
-                break;
-            case 2:
-                temp1=max_distance[8];
-                choose_path_red=2;
-                break;
-
-            case 3:
-                temp1=max_distance[7];
-                //color='r';
-                choose_path_red=3;
-                break;
-
-            case 4:
-                temp1=max_distance[6];
-                //color='r';
-                choose_path_red=4;
-                break;
-            case 5:
-                temp1=max_distance[5];
-               // color='r';
-                choose_path_red=5;
-                break;
-
-        }
-    }
-
-    if(coun2<temp2)
-        coun2++;
-
-    else
-    {
-        coun2=0;
-        int k = rand()%5 + 1;
-        switch(k)
-        {
-            case 1:
-                temp2=max_distance[4];
-                choose_path_blue=1;
-                break;
-            case 2:
-                temp2=max_distance[3];
-                //color='b';
-                choose_path_blue=2;
-                break;
-            case 3:
-                temp2=max_distance[2];
-               // color='b';
-                choose_path_blue=3;
-                break;
-            case 4:
-                temp2=max_distance[1];
-               // color='b';
-                choose_path_blue=4;
-                break;
-            case 5:
-                temp2=max_distance[0];
-               // color='b';
-                choose_path_blue=5;
-                break;
-
-        }
-    }
 
     glutPostRedisplay();
     glutTimerFunc(25, update, 0);
@@ -422,9 +271,6 @@ main(int argc, char *argv[])
 {
 
 Generate_U_Theta();
-
-temp1 = max_distance[9];
-temp2 = max_distance[5];
 
 init();
 glutInit(&argc, argv);
