@@ -137,14 +137,14 @@ void Generate_U_Theta()
 
     for(int i=0; i<10; i++) //Generating random initial velocities
     {
-        u.push_back(rand()%10+100);
+        u.push_back(rand()%110+100);
     }
 
     sort(u.begin(), u.end());
 
     for(int i=0; i<5; i++) //Generating random angles
     {
-        float angle_in_degrees = rand()%25+30;
+        float angle_in_degrees = rand()%25+15;
         float angle_in_radians = (angle_in_degrees*PI)/180;
 
         theta.push_back(angle_in_radians);

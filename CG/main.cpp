@@ -330,21 +330,7 @@ void container(){
         glVertex2d(600, 0);
     glEnd();
 }
-/*void processSpecialKeys (int key, int mx, int my) {
-    switch(key){
-    case GLUT_KEY_LEFT :
-        if(x_container<400)
-        x_container = x_container-5;
-        glutPostRedisplay();
-        break;
-    case GLUT_KEY_RIGHT :
-        x_container = x_container+5;
-        glutPostRedisplay();
-        break;
-    default:
-        break;
-    }
-}*/
+
 void wheel(int position)
 {
 int j;
