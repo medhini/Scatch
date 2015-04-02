@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include "Declaration.h"
+//#include "Declaration.h"
 
 float g=9.8;
 #define PI 3.14159265
@@ -144,7 +144,7 @@ void Generate_U_Theta()
 
     for(int i=0; i<5; i++) //Generating random angles
     {
-        float angle_in_degrees = rand()%25+15;
+        float angle_in_degrees = rand()%35+35;
         float angle_in_radians = (angle_in_degrees*PI)/180;
 
         theta.push_back(angle_in_radians);

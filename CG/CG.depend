@@ -17,13 +17,12 @@
 	<algorithm>
 	<vector>
 
-1427834669 source:/home/medhini/OpenGL_Project/CG/Projectile.cpp
+1427884254 source:/home/medhini/OpenGL_Project/CG/Projectile.cpp
 	<math.h>
 	<stdio.h>
 	<iostream>
 	<algorithm>
 	<vector>
-	"Declaration.h"
 
 1427652883 /home/medhini/OpenGL_Project/CG/Declaration.h
 

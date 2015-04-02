@@ -20,7 +20,7 @@ GLdouble width, height; /* window width and height */
 int wd; /* GLUT window handle */
 int eands[NENDS][2];
 int i=0, coun=0, coun2=0; /* array of 2D points */
-float x, y, r=15, u, theta, ch1=0, ch2 = 0;
+float x, y, r=15, u, theta, angle=0, ch1=0, ch2 = 0;
 float tof;
 float X[100],Y[100];
 void calc(void);
@@ -76,37 +76,16 @@ void init(void)
 }
 /* Callback functions for GLUT */
 /* Draw the window - this is where all the GL actions are */
-void circle_draw()
+void triangle_draw()
 {
     //glColor3f(0.0, 0.0, 0.0);
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
-    int h = 1-r;
-    int x0 = 0, y0 = r;
-    double end = r/(sqrt(2));
-    while(x0<=end)
-    {
-        if(h<=0)
-        {
-            h += 2*x0 + 3;
-        }
-        else
-        {
-            h += 2*x0 - 2*y0 + 5;
-            y0--;
-        }
-        x0++;
-        glVertex2d(x + x0, y + y0);
-        glVertex2d(x + x0, y - y0);
-        glVertex2d(x - x0, y - y0);
-        glVertex2d(x - x0, y + y0);
-        glVertex2d(x + y0, y + x0);
-        glVertex2d(x + y0, y - x0);
-        glVertex2d(x - y0, y - x0);
-        glVertex2d(x - y0, y + x0);
-    }
+        glVertex2d(0,0);
+        glVertex2d(25,43);
+        glVertex2d(50, 0);
     glEnd();
-    glutSwapBuffers();
+    //glutSwapBuffers();
 }
 void repeated_draw() //Insert cases here to randomly choose one of the paths !!!!!!!!!!!!!
 {
@@ -120,7 +99,9 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
 
             glPushMatrix();
                 glTranslatef(Red_Path1[coun].first, Red_Path1[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                    //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
                 circle_draw();
             glPopMatrix();
@@ -131,6 +112,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             glPushMatrix();
                 glTranslatef(Red_Path2[coun].first, Red_Path2[coun].second,0);
                 //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
                 circle_draw();
             glPopMatrix();
@@ -140,6 +123,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             glPushMatrix();
                 glTranslatef(Red_Path3[coun].first, Red_Path3[coun].second,0);
                 //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
                 circle_draw();
             glPopMatrix();
@@ -148,7 +133,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 4:
             glPushMatrix();
                 glTranslatef(Red_Path4[coun].first, Red_Path4[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
                 circle_draw();
             glPopMatrix();
@@ -157,7 +143,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 5:
             glPushMatrix();
                 glTranslatef(Red_Path5[coun].first, Red_Path5[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
                 circle_draw();
             glPopMatrix();
@@ -170,7 +157,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 1:
             glPushMatrix();
                 glTranslatef(Blue_Path1[coun2].first, Blue_Path1[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 circle_draw();
             glPopMatrix();
@@ -179,7 +167,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 2:
             glPushMatrix();
                 glTranslatef(Blue_Path2[coun2].first, Blue_Path2[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 circle_draw();
             glPopMatrix();
@@ -188,7 +177,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 3:
             glPushMatrix();
                 glTranslatef(Blue_Path3[coun2].first, Blue_Path3[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 circle_draw();
             glPopMatrix();
@@ -197,7 +187,8 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
             case 4:
             glPushMatrix();
                 glTranslatef(Blue_Path4[coun2].first, Blue_Path4[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 circle_draw();
             glPopMatrix();
@@ -207,20 +198,22 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
 
             glPushMatrix();
                 glTranslatef(Blue_Path5[coun2].first, Blue_Path5[coun2].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glRotatef(angle,0.0,0.0,1.0);
+                glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 circle_draw();
             glPopMatrix();
             break;
         }
 
-    glFlush();
-    glutSwapBuffers();
+    //glFlush();
+    //glutSwapBuffers();
 
 }
 void update(int l) //update function pushes the frames ahead. Calls GlutPostRedisplay
 {
     //i++;
+    angle+=10;
     if(coun<temp1)
         coun++;
     else
@@ -296,7 +289,7 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
     }
 
     glutPostRedisplay();
-    glutTimerFunc(25, update, 0);
+    glutTimerFunc(25, update, l);
 }
 void sq()
 {
@@ -317,7 +310,7 @@ void sq()
         glVertex2d(250, 138);
         glVertex2d(300, 138);
     glEnd();
-    glutSwapBuffers();
+    //glutSwapBuffers();
 }
 
 void container(){
@@ -345,8 +338,8 @@ glBegin(GL_POLYGON);
   }
 
 glEnd();
-glFlush();
-glutSwapBuffers();
+//glFlush();
+//glutSwapBuffers();
 }
 
 void move_container()
@@ -365,10 +358,10 @@ void display(void) //This function redraws the scene by creating the frames
         //sq();
         repeated_draw();
         //sq();
-    //sq();
-    //wheel(40);
-   // wheel(200);
-   // move_container();
+    sq();
+    wheel(40);
+    wheel(200);
+    move_container();
 
     glFlush();
     glutSwapBuffers();
@@ -401,7 +394,9 @@ void keyboardown(int key, int x, int y) {
     default:
         break;
     }
-glutPostRedisplay();
+//glutPostRedisplay();
+//glFlush();
+//glutSwapBuffers();
 }
 int
 main(int argc, char *argv[])
@@ -416,7 +411,7 @@ init();
 glutInit(&argc, argv);
 /* specify the display to be single
 buffered and color as RGBA values */
-glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_DEPTH);
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 /* set the initial window size */
 glutInitWindowSize((int) width, (int) height);
 /* create the window and store the handle to it */
@@ -430,7 +425,7 @@ glutReshapeFunc(reshape);
 glutDisplayFunc(display);
 glutSpecialFunc(keyboardown);
 /* start the GLUT main loop */
-glutTimerFunc(25, update, 0);
+glutTimerFunc(100, update, 0);
 glutMainLoop();
 return 0;
 }
