@@ -26,6 +26,8 @@ float X[100],Y[100];
 void calc(void);
 float posX = 0, posY = 0, posZ = 0;
 #define PI 3.14159265
+
+int recordX[1000]={}, recordY[1000]={};
 extern pair <int, int> Red_Path1[500];
 extern pair <int, int> Red_Path2[500];
 extern pair <int, int> Red_Path3[500];
@@ -74,20 +76,20 @@ void init(void)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
 }
-/* Callback functions for GLUT */
-/* Draw the window - this is where all the GL actions are */
+
 void triangle_draw()
 {
-    //glColor3f(0.0, 0.0, 0.0);
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
+        glColor3f(0.0, 1.0, 0.0);
         glVertex2d(0,0);
+        glColor3f(1.0, 0.0, 0.0);
         glVertex2d(25,43);
+        glColor3f(0.0, 0.0, 1.0);
         glVertex2d(50, 0);
     glEnd();
-    //glutSwapBuffers();
 }
-void repeated_draw() //Insert cases here to randomly choose one of the paths !!!!!!!!!!!!!
+void repeated_draw()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -103,7 +105,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -115,7 +117,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -126,7 +128,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -136,7 +138,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -146,7 +148,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -160,7 +162,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -170,7 +172,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -180,7 +182,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -190,7 +192,7 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
 
@@ -201,19 +203,16 @@ void repeated_draw() //Insert cases here to randomly choose one of the paths !!!
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
-                circle_draw();
+                triangle_draw();
             glPopMatrix();
             break;
         }
-
-    //glFlush();
-    //glutSwapBuffers();
-
 }
 void update(int l) //update function pushes the frames ahead. Calls GlutPostRedisplay
 {
     //i++;
     angle+=10;
+//    recordX[]
     if(coun<temp1)
         coun++;
     else
@@ -394,9 +393,27 @@ void keyboardown(int key, int x, int y) {
     default:
         break;
     }
-//glutPostRedisplay();
-//glFlush();
-//glutSwapBuffers();
+}
+void glutPassiveMotionFunc(void (*func)(int x, int y));
+void mouse(int button, int state, int x, int y)
+{
+    switch(button)
+    {
+        case GLUT_LEFT_BUTTON:
+            if(state==GLUT_DOWN)
+                {
+
+                }
+            break;
+
+        case GLUT_RIGHT_BUTTON:
+            if(state==GLUT_DOWN)
+                exit(0);
+            break;
+
+        default:
+            break;
+    }
 }
 int
 main(int argc, char *argv[])
@@ -424,6 +441,8 @@ glutReshapeFunc(reshape);
 /* register function that draws in the window */
 glutDisplayFunc(display);
 glutSpecialFunc(keyboardown);
+//glutPassiveMotionFunc()
+glutMouseFunc(mouse);
 /* start the GLUT main loop */
 glutTimerFunc(100, update, 0);
 glutMainLoop();
