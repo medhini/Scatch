@@ -327,9 +327,9 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
     else
         choose_new_red_path();
 
-    if(chosenY>=66 && chosenY<=73 && check_visited==1)
+    if(chosenY>=65 && chosenY<=75 && check_visited==1)
     {
-        if(chosenX>=containerX && chosenX<=containerY)
+        if(chosenX>=containerX-5 && chosenX<=containerY+5)
         {
             choose_new_red_path();
             score+=10;
@@ -338,7 +338,7 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
         check_visited=0;
     }
 
-    else if(chosenY>=66 && chosenY<=73)
+    else if(chosenY>=65 && chosenY<=75)
         check_visited=1;
 
     if(count_blue<temp2)
@@ -387,20 +387,10 @@ void sq()
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
         glVertex2d(0,50);
-        glVertex2d(0,400);
-        glVertex2d(400, 400);
-        glVertex2d(200, 50);
+        glVertex2d(0,150);
+        glVertex2d(150, 150);
+        glVertex2d(75, 50);
     glEnd();
-
-    glColor3f(0.0, 0.0, 0.0);
-    glLineWidth(3.0);
-    glBegin(GL_POLYGON);
-        glVertex2d(243,128);
-        glVertex2d(300,128);
-        glVertex2d(250, 138);
-        glVertex2d(300, 138);
-    glEnd();
-    //glutSwapBuffers();
 }
 
 void container(){
@@ -424,7 +414,7 @@ glBegin(GL_POLYGON);
  for( j=0;j<=360;++j)
   {
     float deg=j*3.14/180;
-    glVertex2f(position+cos(deg)*50,40+sin(deg)*50);
+    glVertex2f(position+cos(deg)*40,40+sin(deg)*40);
   }
 
 glEnd();
@@ -448,7 +438,6 @@ void display(void) //This function redraws the scene by creating the frames
 
     sq();
     wheel(40);
-    wheel(200);
     move_container();
 
     glFlush();
@@ -474,14 +463,14 @@ void reshape(int w, int h)
 void keyboardown(int key, int x, int y) {
     switch (key) {
     case GLUT_KEY_RIGHT:
-        posX += 25;
-        containerX+=25;
-        containerY+=25;
+        posX += 15;
+        containerX+=15;
+        containerY+=15;
         break;
     case GLUT_KEY_LEFT:
-        posX -= 25;
-        containerX-=25;
-        containerY-=25;
+        posX -= 15;
+        containerX-=15;
+        containerY-=15;
         break;
     default:
         break;

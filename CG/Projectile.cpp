@@ -137,7 +137,7 @@ void Generate_U_Theta()
 
     for(int i=0; i<10; i++) //Generating random initial velocities
     {
-        u.push_back(rand()%30+70);
+        u.push_back(rand()%30+80);
     }
 
     sort(u.begin(), u.end());
@@ -151,7 +151,7 @@ void Generate_U_Theta()
     }
     for(int i=0;i<10; i++)
     {
-        max_distance.push_back(rand()%100+60);
+        max_distance.push_back(rand()%60+80);
     }
 
     sort(max_distance.begin(), max_distance.end());
