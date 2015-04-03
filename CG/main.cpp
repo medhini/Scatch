@@ -19,8 +19,8 @@ using namespace std;
 GLdouble width, height; /* window width and height */
 int wd; /* GLUT window handle */
 int eands[NENDS][2];
-int i=0, coun=0, coun2=0; /* array of 2D points */
-float x, y, r=15, u, theta, angle=0, ch1=0, ch2 = 0;
+int i=0, count_red=20, count_blue=20, score=0; /* array of 2D points */
+float x, y, r=15, u, theta, angle=0, ch1=0, ch2 = 0, chosenY=0, chosenX=0, containerX=500, containerY=650;
 float tof;
 float X[100],Y[100];
 void calc(void);
@@ -81,11 +81,11 @@ void triangle_draw()
 {
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
-        glColor3f(0.0, 1.0, 0.0);
+       // glColor3f(0.0, 1.0, 0.0);
         glVertex2d(0,0);
-        glColor3f(1.0, 0.0, 0.0);
+       // glColor3f(1.0, 0.0, 0.0);
         glVertex2d(25,43);
-        glColor3f(0.0, 0.0, 1.0);
+      //  glColor3f(0.0, 0.0, 1.0);
         glVertex2d(50, 0);
     glEnd();
 }
@@ -100,8 +100,10 @@ void repeated_draw()
             case 1:
 
             glPushMatrix();
-                glTranslatef(Red_Path1[coun].first, Red_Path1[coun].second,0);
-                    //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glTranslatef(Red_Path1[count_red].first, Red_Path1[count_red].second,0);
+
+                //cout<<Red_Path1[count_red].first<<" "<<Red_Path1[count_red].second<<endl;
+                chosenY=Red_Path1[count_red].second;
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -112,8 +114,10 @@ void repeated_draw()
             case 2:
 
             glPushMatrix();
-                glTranslatef(Red_Path2[coun].first, Red_Path2[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glTranslatef(Red_Path2[count_red].first, Red_Path2[count_red].second,0);
+
+               // cout<<Red_Path2[count_red].first<<" "<<Red_Path2[count_red].second<<endl;
+                chosenY=Red_Path2[count_red].second;
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -123,8 +127,10 @@ void repeated_draw()
 
             case 3:
             glPushMatrix();
-                glTranslatef(Red_Path3[coun].first, Red_Path3[coun].second,0);
-                //cout<<Red_Path1[coun].first<<" "<<Red_Path1[coun].second<<endl;
+                glTranslatef(Red_Path3[count_red].first, Red_Path3[count_red].second,0);
+
+                //cout<<Red_Path3[count_red].first<<" "<<Red_Path3[count_red].second<<endl;
+                chosenY=Red_Path3[count_red].second;
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -134,7 +140,10 @@ void repeated_draw()
 
             case 4:
             glPushMatrix();
-                glTranslatef(Red_Path4[coun].first, Red_Path4[coun].second,0);
+                glTranslatef(Red_Path4[count_red].first, Red_Path4[count_red].second,0);
+
+               // cout<<Red_Path4[count_red].first<<" "<<Red_Path4[count_red].second<<endl;
+                chosenY=Red_Path4[count_red].second;
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -144,7 +153,10 @@ void repeated_draw()
 
             case 5:
             glPushMatrix();
-                glTranslatef(Red_Path5[coun].first, Red_Path5[coun].second,0);
+                glTranslatef(Red_Path5[count_red].first, Red_Path5[count_red].second,0);
+
+              //  cout<<Red_Path5[count_red].first<<" "<<Red_Path5[count_red].second<<endl;
+                chosenY=Red_Path5[count_red].second;
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -158,7 +170,7 @@ void repeated_draw()
         {
             case 1:
             glPushMatrix();
-                glTranslatef(Blue_Path1[coun2].first, Blue_Path1[coun2].second,0);
+                glTranslatef(Blue_Path1[count_blue].first, Blue_Path1[count_blue].second,0);
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
@@ -168,7 +180,7 @@ void repeated_draw()
 
             case 2:
             glPushMatrix();
-                glTranslatef(Blue_Path2[coun2].first, Blue_Path2[coun2].second,0);
+                glTranslatef(Blue_Path2[count_blue].first, Blue_Path2[count_blue].second,0);
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
@@ -178,7 +190,7 @@ void repeated_draw()
 
             case 3:
             glPushMatrix();
-                glTranslatef(Blue_Path3[coun2].first, Blue_Path3[coun2].second,0);
+                glTranslatef(Blue_Path3[count_blue].first, Blue_Path3[count_blue].second,0);
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
@@ -188,7 +200,7 @@ void repeated_draw()
 
             case 4:
             glPushMatrix();
-                glTranslatef(Blue_Path4[coun2].first, Blue_Path4[coun2].second,0);
+                glTranslatef(Blue_Path4[count_blue].first, Blue_Path4[count_blue].second,0);
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
@@ -199,7 +211,7 @@ void repeated_draw()
             case 5:
 
             glPushMatrix();
-                glTranslatef(Blue_Path5[coun2].first, Blue_Path5[coun2].second,0);
+                glTranslatef(Blue_Path5[count_blue].first, Blue_Path5[count_blue].second,0);
                 glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
@@ -208,54 +220,133 @@ void repeated_draw()
             break;
         }
 }
+void find_chosenX(int path)
+{
+    switch(path)
+    {
+        case 1:
+                for(int i=1; i<max_distance[9]-1; i++)
+                {
+                    if(Red_Path1[i].second>=60 && Red_Path1[i].second<=80 && Red_Path1[i].second<Red_Path1[i-1].second)
+                    {
+                        chosenX=Red_Path1[i].first;
+                        break;
+                    }
+                }
+                break;
+        case 2:
+                for(int i=0; i<max_distance[8]; i++)
+                {
+                    if(Red_Path2[i].second>=60 && Red_Path2[i].second<=80 && Red_Path2[i].second<Red_Path2[i-1].second)
+                    {
+                        chosenX=Red_Path2[i].first;
+                        break;
+                    }
+                }
+                break;
+
+        case 3:
+                for(int i=0; i<max_distance[7]; i++)
+                {
+                    if(Red_Path3[i].second>=60 && Red_Path3[i].second<=80 && Red_Path3[i].second<Red_Path3[i-1].second)
+                    {
+                        chosenX=Red_Path3[i].first;
+                        break;
+                    }
+                }
+                break;
+
+        case 4:
+                for(int i=0; i<max_distance[6]; i++)
+                {
+                    if(Red_Path4[i].second>=60 && Red_Path4[i].second<=80 && Red_Path4[i].second<Red_Path4[i-1].second)
+                    {
+                        chosenX=Red_Path4[i].first;
+                        break;
+                    }
+                }
+                break;
+
+        case 5:
+                for(int i=0; i<max_distance[5]; i++)
+                {
+                    if(Red_Path5[i].second>=60 && Red_Path5[i].second<=80 && Red_Path5[i].second<Red_Path5[i-1].second)
+                    {
+                        chosenX=Red_Path5[i].first;
+                        break;
+                    }
+                }
+                break;
+    }
+}
+void choose_new_red_path()
+{
+    count_red=20;
+    chosenY=0;
+    int k = rand()%5 + 1;
+    switch(k)
+    {
+        case 1:
+            temp1=max_distance[9];
+            choose_path_red=1;
+            find_chosenX(1);
+            break;
+        case 2:
+            temp1=max_distance[8];
+            choose_path_red=2;
+            find_chosenX(2);
+            break;
+
+        case 3:
+            temp1=max_distance[7];
+            choose_path_red=3;
+            find_chosenX(3);
+            break;
+
+        case 4:
+            temp1=max_distance[6];
+            choose_path_red=4;
+            find_chosenX(4);
+            break;
+        case 5:
+            temp1=max_distance[5];
+            choose_path_red=5;
+            find_chosenX(5);
+            break;
+    }
+    chosenY=0;
+    count_red=20;
+}
+int check_visited=0;
 void update(int l) //update function pushes the frames ahead. Calls GlutPostRedisplay
 {
-    //i++;
     angle+=10;
-//    recordX[]
-    if(coun<temp1)
-        coun++;
+
+    if(count_red<temp1)
+        count_red++;
     else
+        choose_new_red_path();
+
+    if(chosenY>=66 && chosenY<=73 && check_visited==1)
     {
-        coun=0;
-        int k = rand()%5 + 1;
-        switch(k)
+        if(chosenX>=containerX && chosenX<=containerY)
         {
-            case 1:
-                temp1=max_distance[9];
-                choose_path_red=1;
-                break;
-            case 2:
-                temp1=max_distance[8];
-                choose_path_red=2;
-                break;
-
-            case 3:
-                temp1=max_distance[7];
-                //color='r';
-                choose_path_red=3;
-                break;
-
-            case 4:
-                temp1=max_distance[6];
-                //color='r';
-                choose_path_red=4;
-                break;
-            case 5:
-                temp1=max_distance[5];
-               // color='r';
-                choose_path_red=5;
-                break;
-
+            choose_new_red_path();
+            score+=10;
         }
+        cout<<score<<endl;
+        check_visited=0;
     }
 
-    if(coun2<temp2)
-        coun2++;
+    else if(chosenY>=66 && chosenY<=73)
+        check_visited=1;
+
+    if(count_blue<temp2)
+        count_blue++;
 
     else
     {
-        coun2=0;
+        count_blue=20;
         int k = rand()%5 + 1;
         switch(k)
         {
@@ -286,7 +377,7 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
 
         }
     }
-
+   // cout<<score<<endl;
     glutPostRedisplay();
     glutTimerFunc(25, update, l);
 }
@@ -351,12 +442,10 @@ void move_container()
 void display(void) //This function redraws the scene by creating the frames
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1.0, 1.0, 1.0, 0.0);
 
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(1.0, 1.0, 1.0, 0.0);
-        //sq();
-        repeated_draw();
-        //sq();
+    repeated_draw();
+
     sq();
     wheel(40);
     wheel(200);
@@ -385,10 +474,14 @@ void reshape(int w, int h)
 void keyboardown(int key, int x, int y) {
     switch (key) {
     case GLUT_KEY_RIGHT:
-        posX += 15;
+        posX += 25;
+        containerX+=25;
+        containerY+=25;
         break;
     case GLUT_KEY_LEFT:
-        posX -= 15;
+        posX -= 25;
+        containerX-=25;
+        containerY-=25;
         break;
     default:
         break;
@@ -424,6 +517,7 @@ Generate_U_Theta();
 temp1 = max_distance[9];
 temp2 = max_distance[5];
 
+find_chosenX(1);
 init();
 glutInit(&argc, argv);
 /* specify the display to be single

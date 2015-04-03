@@ -137,24 +137,21 @@ void Generate_U_Theta()
 
     for(int i=0; i<10; i++) //Generating random initial velocities
     {
-        u.push_back(rand()%110+100);
+        u.push_back(rand()%30+70);
     }
 
     sort(u.begin(), u.end());
 
     for(int i=0; i<5; i++) //Generating random angles
     {
-        float angle_in_degrees = rand()%35+35;
+        float angle_in_degrees = rand()%35+45;
         float angle_in_radians = (angle_in_degrees*PI)/180;
 
         theta.push_back(angle_in_radians);
     }
-    for(int i=0; i<5; i++)
-        cout<<theta[i]<<" ";
-
     for(int i=0;i<10; i++)
     {
-        max_distance.push_back(rand()%50+100);
+        max_distance.push_back(rand()%100+60);
     }
 
     sort(max_distance.begin(), max_distance.end());
