@@ -32,6 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Declaration.cpp" />
+		<Unit filename="Declaration.h" />
+		<Unit filename="Figures.cpp" />
+		<Unit filename="Figures.h" />
 		<Unit filename="Projectile.cpp" />
 		<Unit filename="Projectile.h" />
 		<Unit filename="main.cpp" />

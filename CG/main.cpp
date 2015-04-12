@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include "Projectile.h"
+#include "Figures.h"
 //#include "Declaration.h"
 
 using namespace std;
@@ -25,6 +26,9 @@ float tof;
 float X[100],Y[100];
 void calc(void);
 float posX = 0, posY = 0, posZ = 0;
+
+extern GLfloat xRotated, yRotated, zRotated, yTranslate, xTranslate;
+
 #define PI 3.14159265
 
 int recordX[1000]={}, recordY[1000]={};
@@ -225,9 +229,9 @@ void find_chosenX(int path)
     switch(path)
     {
         case 1:
-                for(int i=1; i<max_distance[9]-1; i++)
+                for(int i=0; i<max_distance[9]; i++)
                 {
-                    if(Red_Path1[i].second>=60 && Red_Path1[i].second<=80 && Red_Path1[i].second<Red_Path1[i-1].second)
+                    if(Red_Path1[i].second>=67 && Red_Path1[i].second<=73 && Red_Path1[i].second<Red_Path1[i-1].second)
                     {
                         chosenX=Red_Path1[i].first;
                         break;
@@ -237,7 +241,7 @@ void find_chosenX(int path)
         case 2:
                 for(int i=0; i<max_distance[8]; i++)
                 {
-                    if(Red_Path2[i].second>=60 && Red_Path2[i].second<=80 && Red_Path2[i].second<Red_Path2[i-1].second)
+                    if(Red_Path2[i].second>=67 && Red_Path2[i].second<=73 && Red_Path2[i].second<Red_Path2[i-1].second)
                     {
                         chosenX=Red_Path2[i].first;
                         break;
@@ -248,7 +252,7 @@ void find_chosenX(int path)
         case 3:
                 for(int i=0; i<max_distance[7]; i++)
                 {
-                    if(Red_Path3[i].second>=60 && Red_Path3[i].second<=80 && Red_Path3[i].second<Red_Path3[i-1].second)
+                    if(Red_Path3[i].second>=67 && Red_Path3[i].second<=73 && Red_Path3[i].second<Red_Path3[i-1].second)
                     {
                         chosenX=Red_Path3[i].first;
                         break;
@@ -259,7 +263,7 @@ void find_chosenX(int path)
         case 4:
                 for(int i=0; i<max_distance[6]; i++)
                 {
-                    if(Red_Path4[i].second>=60 && Red_Path4[i].second<=80 && Red_Path4[i].second<Red_Path4[i-1].second)
+                    if(Red_Path4[i].second>=67 && Red_Path4[i].second<=73 && Red_Path4[i].second<Red_Path4[i-1].second)
                     {
                         chosenX=Red_Path4[i].first;
                         break;
@@ -270,7 +274,7 @@ void find_chosenX(int path)
         case 5:
                 for(int i=0; i<max_distance[5]; i++)
                 {
-                    if(Red_Path5[i].second>=60 && Red_Path5[i].second<=80 && Red_Path5[i].second<Red_Path5[i-1].second)
+                    if(Red_Path5[i].second>=67 && Red_Path5[i].second<=73 && Red_Path5[i].second<Red_Path5[i-1].second)
                     {
                         chosenX=Red_Path5[i].first;
                         break;
@@ -327,19 +331,17 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
     else
         choose_new_red_path();
 
-    if(chosenY>=65 && chosenY<=75 && check_visited==1)
+    if(chosenY>=64 && chosenY<=76)
     {
-        if(chosenX>=containerX-5 && chosenX<=containerY+5)
+        if(chosenX>=containerX && chosenX<=containerY)
         {
             choose_new_red_path();
             score+=10;
         }
-        cout<<score<<endl;
-        check_visited=0;
-    }
 
-    else if(chosenY>=65 && chosenY<=75)
-        check_visited=1;
+        cout<<score<<endl;
+        cout<<chosenX<<" "<<containerX<<" "<<containerY<<endl;
+    }
 
     if(count_blue<temp2)
         count_blue++;
@@ -377,7 +379,17 @@ void update(int l) //update function pushes the frames ahead. Calls GlutPostRedi
 
         }
     }
-   // cout<<score<<endl;
+
+    yRotated += 0.1;
+
+    if(yTranslate>-1.5)
+        yTranslate -= 0.001;
+    else
+    {
+        yTranslate = 4.5;
+        xTranslate = 0.02;
+    }
+
     glutPostRedisplay();
     glutTimerFunc(25, update, l);
 }
@@ -434,12 +446,16 @@ void display(void) //This function redraws the scene by creating the frames
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(1.0, 1.0, 1.0, 0.0);
 
+    gluOrtho2D(0.0, width, 0.0, height);
     repeated_draw();
-
     sq();
     wheel(40);
     move_container();
 
+    //gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
+
+   // glViewport(0,0,x,y);
+    //createTeaPot();
     glFlush();
     glutSwapBuffers();
 
@@ -458,7 +474,9 @@ void reshape(int w, int h)
     system set to first quadrant, limited by screen/window size */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0.0, width, 0.0, height);
+
+
+
 }
 void keyboardown(int key, int x, int y) {
     switch (key) {
