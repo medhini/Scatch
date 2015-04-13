@@ -4,6 +4,7 @@
 #include <math.h>
 #include <vector>
 #include <cstdlib>
+#include <sstream>
 #include <algorithm>
 #include "Projectile.h"
 #include "Figures.h"
@@ -283,6 +284,30 @@ void find_chosenX(int path)
                 break;
     }
 }
+
+void drawText(const char *text, int length,int x,int y)
+{
+glMatrixMode(GL_PROJECTION);
+double *matrix=new double[16];
+glGetDoublev(GL_PROJECTION_MATRIX,matrix);
+glLoadIdentity();
+glOrtho(0,500,0,600,-5,5);
+glMatrixMode(GL_MODELVIEW);
+glLoadIdentity();
+glPushMatrix();
+glLoadIdentity();
+glRasterPos2i(x,y);
+for(int i=0;i<length;i++)
+{
+glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int)text[i]);
+}
+
+glPopMatrix();
+glMatrixMode(GL_PROJECTION);
+glLoadMatrixd(matrix);
+glMatrixMode(GL_MODELVIEW);
+
+}
 void choose_new_red_path()
 {
     count_red=20;
@@ -456,6 +481,14 @@ void display(void) //This function redraws the scene by creating the frames
 
    // glViewport(0,0,x,y);
     //createTeaPot();
+
+        string text1="SCORE:";
+        drawText(text1.data(),text1.size(),270,300);
+        std::stringstream ss;
+        ss<<score;
+        string text = ss.str();
+        drawText(text.data(),text.size(),300,300);
+
     glFlush();
     glutSwapBuffers();
 
