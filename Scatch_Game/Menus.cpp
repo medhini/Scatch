@@ -42,22 +42,25 @@ void exit_menu()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(1.0, 0.0, 0.0, 0.0);
+
     glBegin(GL_LINE_STRIP);
-    glVertex2d(420,700);
-    glVertex2d(900,700);
-    glVertex2d(900,730);
-    glVertex2d(420,730);
-    glVertex2d(420,700);
+        glVertex2d(420,700);
+        glVertex2d(900,700);
+        glVertex2d(900,730);
+        glVertex2d(420,730);
+        glVertex2d(420,700);
     glEnd();
+
     string head = "ARE YOU SURE YOU WANT TO QUIT?!?!?!";
     string head1 = "PRESS N TO CONTINUE THE GAME!";
     string head3 = "PRESS Y TO EXIT THE GAME";
+
     glBegin(GL_LINE_STRIP);
-    glVertex2d(200,50);
-    glVertex2d(1080,50);
-    glVertex2d(1080,700);
-    glVertex2d(200,700);
-    glVertex2d(200,50);
+        glVertex2d(200,50);
+        glVertex2d(1080,50);
+        glVertex2d(1080,700);
+        glVertex2d(200,700);
+        glVertex2d(200,50);
     glEnd();
 
     drawText(head.data(),420,710);
@@ -67,47 +70,51 @@ void exit_menu()
 
 void game_screen()
 {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.8, 0.6, 1.2, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.8, 0.6, 1.2, 0.0);
 
+    projectile_motion();
+    Truck();
+    wheel(40);
+    move_container();
 
-        projectile_motion();
-        sq();
-        wheel(40);
-        move_container();
+    glBegin(GL_LINE_STRIP);
+        glVertex2d(1000,600);
+        glVertex2d(1180,600);
+        glVertex2d(1180,700);
+        glVertex2d(1000,700);
+        glVertex2d(1000,600);
+    glEnd();
 
-         glBegin(GL_LINE_STRIP);
-            glVertex2d(1000,600);
-            glVertex2d(1180,600);
-            glVertex2d(1180,700);
-            glVertex2d(1000,700);
-            glVertex2d(1000,600);
-        glEnd();
-        string text1="SCORE:";
-        drawText(text1.data(),1020,670);
-        stringstream ss;
-        ss<<Final_Score;
-        string text = ss.str();
-        drawText(text.data(),1120,670);
+    string head1="SCORE:";
+    drawText(head1.data(),1020,670);
 
-        string text3="MISSES:";
-        drawText(text3.data(),1020,620);
-        stringstream s2;
-        s2<<Number_Of_Misses;
-        string text2 = s2.str();
-        drawText(text2.data(),1140,620);
-        glBegin(GL_LINE_STRIP);
-            glVertex2d(800,600);
-            glVertex2d(1000,600);
-            glVertex2d(1000,700);
-            glVertex2d(800,700);
-            glVertex2d(800,600);
-        glEnd();
-        string text10 = "p -> PAUSE";
-        string text11 = "ESC -> EXIT";
-       // drawText(text2.data(),840,640);
-        drawText(text10.data(),805,670);
-        drawText(text11.data(),805,620);
+    stringstream string_score;
+    string_score<<Final_Score;
+    string head2 = string_score.str();
+    drawText(head2.data(),1120,670);
+
+    string head3="MISSES:";
+    drawText(head3.data(),1020,620);
+
+    stringstream string_miss;
+    string_miss<<Number_Of_Misses;
+    string head4 = string_miss.str();
+    drawText(head4.data(),1140,620);
+
+    glBegin(GL_LINE_STRIP);
+        glVertex2d(800,600);
+        glVertex2d(1000,600);
+        glVertex2d(1000,700);
+        glVertex2d(800,700);
+        glVertex2d(800,600);
+    glEnd();
+
+    string head5 = "p -> PAUSE";
+    string head6 = "ESC -> EXIT";
+
+    drawText(head5.data(),805,670);
+    drawText(head6.data(),805,620);
 
 }
 void menu_start()
@@ -116,18 +123,19 @@ void menu_start()
     glClearColor(1.0, 0.0, 0.0, 0.0);
 
     glBegin(GL_LINE_STRIP);
-            glVertex2d(200,50);
-            glVertex2d(1080,50);
-            glVertex2d(1080,700);
-            glVertex2d(200,700);
-            glVertex2d(200,50);
+        glVertex2d(200,50);
+        glVertex2d(1080,50);
+        glVertex2d(1080,700);
+        glVertex2d(200,700);
+        glVertex2d(200,50);
     glEnd();
+
     glBegin(GL_LINE_STRIP);
-            glVertex2d(180,30);
-            glVertex2d(1100,30);
-            glVertex2d(1100,720);
-            glVertex2d(180,720);
-            glVertex2d(180,30);
+        glVertex2d(180,30);
+        glVertex2d(1100,30);
+        glVertex2d(1100,720);
+        glVertex2d(180,720);
+        glVertex2d(180,30);
     glEnd();
 
     string head = "CLUB PENGIUN";
@@ -143,37 +151,37 @@ void menu_start()
     drawText(head.data(),550,700);
     drawText(head1.data(),520,100);
     drawText(head2.data(),550,650);
+
     glBegin(GL_LINE_STRIP);
-            glVertex2d(400,400);
-            glVertex2d(900,400);
-            glVertex2d(900,600);
-            glVertex2d(400,600);
-            glVertex2d(400,400);
+        glVertex2d(400,400);
+        glVertex2d(900,400);
+        glVertex2d(900,600);
+        glVertex2d(400,600);
+        glVertex2d(400,400);
     glEnd();
+
     drawText(head3.data(),420,580);
     drawText(head4.data(),420,550);
     drawText(head5.data(),420,520);
     drawText(head6.data(),420,490);
     drawText(head7.data(),420,460);
     drawText(head8.data(),420,430);
-
-
 }
 
 void menu_game_over()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(1.0, 0.0, 0.0, 0.0);
+
     glBegin(GL_LINE_STRIP);
-            glVertex2d(200,50);
-            glVertex2d(1080,50);
-            glVertex2d(1080,700);
-            glVertex2d(200,700);
-            glVertex2d(200,50);
+        glVertex2d(200,50);
+        glVertex2d(1080,50);
+        glVertex2d(1080,700);
+        glVertex2d(200,700);
+        glVertex2d(200,50);
     glEnd();
 
     stringstream StreamScore;
-
     StreamScore<<Saved_Score;
 
     string head = "GAME OVER";
@@ -199,6 +207,5 @@ void menu_game_over()
     drawText(head8.data(),700,310);
     drawText(head9.data(),700,280);
     drawText(head10.data(),700,250);
-
 }
 

@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <cstdlib>
 #include <sstream>
-#include<cstring>
+#include <cstring>
 #include <algorithm>
 #include <sys/types.h>
 #include <unistd.h>
@@ -14,7 +14,7 @@
 #include "Projectile.h"
 #include "Callbacks.h"
 #include "Figures.h"
-//#include "Declaration.h"
+#include "Declaration.h"
 
 using namespace std;
 
@@ -25,7 +25,6 @@ using namespace std;
 #endif
 #define NENDS 2
 
-extern int choose_path_red, choose_path_blue;
 extern pair <float, float> Red_Path1[500];
 extern pair <float, float> Red_Path2[500];
 extern pair <float, float> Red_Path3[500];
@@ -36,14 +35,15 @@ extern pair <float, float> Blue_Path2[500];
 extern pair <float, float> Blue_Path3[500];
 extern pair <float, float> Blue_Path4[500];
 extern pair <float, float> Blue_Path5[500];
-extern int Red_Triangle_Counter_Variable, Blue_Circle_Counter_Variable;
 
+extern int Red_Triangle_Counter_Variable, Blue_Circle_Counter_Variable;
+extern int choose_path_red, choose_path_blue;
 extern float Basket_LEFT, Basket_RIGHT;
 extern bool red_caught, blue_clicked;
 extern int Angle_Of_Rotation;
 extern float Position_X_Basket;
 
-void projectile_motion()
+void projectile_motion() //Animation of Triangles and Circles
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -58,15 +58,9 @@ void projectile_motion()
 
                 if(Red_Path1[Red_Triangle_Counter_Variable].second>=67 && Red_Path1[Red_Triangle_Counter_Variable].second<=75.1 )
                 {
-                    cout<<Red_Path1[Red_Triangle_Counter_Variable].first<<" "<<Red_Path1[Red_Triangle_Counter_Variable].second<<endl;
                     if(Red_Path1[Red_Triangle_Counter_Variable].first>Basket_LEFT && Red_Path1[Red_Triangle_Counter_Variable].first<Basket_RIGHT)
                         red_caught=true;
                 }
-
-
-
-
-                //chosenY=Red_Path1[count_red].second;
                 glRotatef(Angle_Of_Rotation,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -81,13 +75,9 @@ void projectile_motion()
 
                 if(Red_Path2[Red_Triangle_Counter_Variable].second>=67 && Red_Path2[Red_Triangle_Counter_Variable].second<=75.1 )
                 {
-                    cout<<Red_Path2[Red_Triangle_Counter_Variable].first<<" "<<Red_Path2[Red_Triangle_Counter_Variable].second<<endl;
                     if(Red_Path2[Red_Triangle_Counter_Variable].first>Basket_LEFT && Red_Path2[Red_Triangle_Counter_Variable].first<Basket_RIGHT )
                         red_caught=true;
                 }
-
-
-               //chosenY=Red_Path2[count_red].second;
                 glRotatef(Angle_Of_Rotation,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -100,13 +90,9 @@ void projectile_motion()
                 glTranslatef(Red_Path3[Red_Triangle_Counter_Variable].first, Red_Path3[Red_Triangle_Counter_Variable].second,0);
                 if(Red_Path3[Red_Triangle_Counter_Variable].second>=67 && Red_Path3[Red_Triangle_Counter_Variable].second<=75.1  )
                 {
-                    cout<<Red_Path3[Red_Triangle_Counter_Variable].first<<" "<<Red_Path3[Red_Triangle_Counter_Variable].second<<endl;
                     if(Red_Path3[Red_Triangle_Counter_Variable].first>Basket_LEFT && Red_Path3[Red_Triangle_Counter_Variable].first<Basket_RIGHT)
                         red_caught=true;
                 }
-
-
-                //chosenY=Red_Path3[count_red].second;
                 glRotatef(Angle_Of_Rotation,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -119,13 +105,9 @@ void projectile_motion()
                 glTranslatef(Red_Path4[Red_Triangle_Counter_Variable].first, Red_Path4[Red_Triangle_Counter_Variable].second,0);
                 if(Red_Path4[Red_Triangle_Counter_Variable].second>=67 && Red_Path4[Red_Triangle_Counter_Variable].second<=75.1 )
                 {
-                    cout<<Red_Path4[Red_Triangle_Counter_Variable].first<<" "<<Red_Path4[Red_Triangle_Counter_Variable].second<<endl;
                     if(Red_Path4[Red_Triangle_Counter_Variable].first>Basket_LEFT && Red_Path4[Red_Triangle_Counter_Variable].first<Basket_RIGHT )
                         red_caught=true;
                 }
-
-
-                //chosenY=Red_Path4[count_red].second;
                 glRotatef(Angle_Of_Rotation,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -138,14 +120,9 @@ void projectile_motion()
                 glTranslatef(Red_Path5[Red_Triangle_Counter_Variable].first, Red_Path5[Red_Triangle_Counter_Variable].second,0);
                 if(Red_Path5[Red_Triangle_Counter_Variable].second>=67 && Red_Path5[Red_Triangle_Counter_Variable].second<=75.1)
                 {
-                    cout<<Red_Path5[Red_Triangle_Counter_Variable].first<<" "<<Red_Path5[Red_Triangle_Counter_Variable].second<<endl;
                     if(Red_Path5[Red_Triangle_Counter_Variable].first>Basket_LEFT && Red_Path5[Red_Triangle_Counter_Variable].first<Basket_RIGHT )
                        red_caught=true;
                 }
-
-
-               // chosenY=Red_Path5[count_red].second;
-
                 glRotatef(Angle_Of_Rotation,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(1.0, 0.0, 0.0);
@@ -160,7 +137,6 @@ void projectile_motion()
             case 1:
             glPushMatrix();
                 glTranslatef(Blue_Path1[Blue_Circle_Counter_Variable].first, Blue_Path1[Blue_Circle_Counter_Variable].second,0);
-                //glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 blue_circle_draw();
@@ -170,7 +146,6 @@ void projectile_motion()
             case 2:
             glPushMatrix();
                 glTranslatef(Blue_Path2[Blue_Circle_Counter_Variable].first, Blue_Path2[Blue_Circle_Counter_Variable].second,0);
-                //glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 blue_circle_draw();
@@ -180,7 +155,6 @@ void projectile_motion()
             case 3:
             glPushMatrix();
                 glTranslatef(Blue_Path3[Blue_Circle_Counter_Variable].first, Blue_Path3[Blue_Circle_Counter_Variable].second,0);
-                //glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 blue_circle_draw();
@@ -190,7 +164,6 @@ void projectile_motion()
             case 4:
             glPushMatrix();
                 glTranslatef(Blue_Path4[Blue_Circle_Counter_Variable].first, Blue_Path4[Blue_Circle_Counter_Variable].second,0);
-               // glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 blue_circle_draw();
@@ -201,22 +174,19 @@ void projectile_motion()
 
             glPushMatrix();
                 glTranslatef(Blue_Path5[Blue_Circle_Counter_Variable].first, Blue_Path5[Blue_Circle_Counter_Variable].second,0);
-                //glRotatef(angle,0.0,0.0,1.0);
                 glTranslatef(-25,-14,0);
                 glColor3f(0.0, 0.0, 1.0);
                 blue_circle_draw();
             glPopMatrix();
             break;
         }
-
-
 }
 
 void move_container()
 {
     glPushMatrix();
         glTranslatef(Position_X_Basket, 0, 0);
-        container();
+        Basket();
     glPopMatrix();
 }
 

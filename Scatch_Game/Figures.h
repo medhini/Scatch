@@ -4,8 +4,8 @@
 void red_triangle_draw();
 void blue_circle_draw();
 void drawText(char const *str,float x,float y);
-void sq();
-void container();
+void Truck();
+void Basket();
 void wheel(int position);
 
 

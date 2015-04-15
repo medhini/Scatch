@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <cstdlib>
 #include <sstream>
-#include<cstring>
+#include <cstring>
 #include <algorithm>
 #include <sys/types.h>
 #include <unistd.h>
@@ -38,7 +38,6 @@ extern int width_screen;
 extern bool blue_clicked;
 extern int game_state;
 
-//vector <float> u;
 
 /* Program initialization NOT OpenGL/GLUT dependent,
 as we haven't created a GLUT window yet */
@@ -50,25 +49,7 @@ void init(void)
     Ends[0][1] = (int)(1.0*height);
     Ends[1][0] = (int)(1.0*width);
     Ends[1][1] = (int)(0.0*height);
-    glOrtho(-1.0,1.0,-1.0,1.0,-1.0,1.0);
-    // Lighting set up
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
 
-    // Set lighting intensity and color
-    GLfloat qaAmbientLight[]	= {100, 100, 100, 1.0};
-    GLfloat qaDiffuseLight[]	= {0.8, 0.8, 0.8, 1.0};
-    GLfloat qaSpecularLight[]	= {1.0, 1.0, 1.0, 1.0};
-    glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
-
-    // Set the light position
-    GLfloat qaLightPosition[]	= {200, 40, 0, 1.0};
-    glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_COLOR_MATERIAL);
 }
 
 void timer_func(int l)
@@ -105,7 +86,7 @@ void reshape(int w, int h)
 
 }
 
-void display(void) //This function redraws the scene by creating the frames
+void Main_Display(void)
 {
     switch(game_state)
     {
@@ -116,50 +97,48 @@ void display(void) //This function redraws the scene by creating the frames
             game_screen();
             break;
         case 2 :
-            draw_pause_menu(); //NEED MENU
+            draw_pause_menu();
             break;
         case 3 :
             menu_game_over();
             break;
         case 4 :
-            exit_menu();//NEED ARE YOU SURE MENU
+            exit_menu();
             break;
     }
     glFlush();
     glutSwapBuffers();
 }
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 
-Generate_U_Theta();
+    Generate_U_Theta();
 
-Red_Range = max_distance[9];
-Blue_Range = max_distance[5];
+    Red_Range = max_distance[9];
+    Blue_Range = max_distance[5];
 
-//find_chosenX(1);
-init();
-glutInit(&argc, argv);
-/* specify the display to be single
-buffered and color as RGBA values */
-glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-/* set the initial window size */
-glutInitWindowSize((int) width, (int) height);
-/* create the window and store the handle to it */
-width_screen = glutCreateWindow("Club Penguin" /* title */ );
-/* --- register callbacks with GLUT --- */
-/* register function to handle window resizes */
-glutReshapeFunc(reshape);
-//keyboardListener();
-//light();
-/* register function that draws in the window */
+    init();
+    glutInit(&argc, argv);
+    /* specify the display to be single
+    buffered and color as RGBA values */
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+    /* set the initial window size */
+    glutInitWindowSize((int) width, (int) height);
+    /* create the window and store the handle to it */
+    width_screen = glutCreateWindow("Scatch" /* title */ );
+    glutSetCursor(GLUT_CURSOR_FULL_CROSSHAIR);
+    /* --- register callbacks with GLUT --- */
+    /* register function to handle window resizes */
+    glutReshapeFunc(reshape);
 
-glutDisplayFunc(display);
-glutKeyboardFunc(keyboardown);
-//glutPassiveMotionFunc()
-glutMouseFunc(onMouse);
-/* start the GLUT main loop */
-glutTimerFunc(25, timer_func, 0);
-glutMainLoop();
-return 0;
+    /* register function that draws in the window */
+
+    glutDisplayFunc(Main_Display);
+    glutKeyboardFunc(keyboardown);
+
+    glutMouseFunc(onMouse);
+    /* start the GLUT main loop */
+    glutTimerFunc(25, timer_func, 0);
+    glutMainLoop();
+    return 0;
 }

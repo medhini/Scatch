@@ -6,13 +6,15 @@
 using namespace std;
 
 
-GLfloat xRotated, yRotated, zRotated, yTranslate, xTranslate,zTranslate=-2.0;
-int flag=1,rflag=0,bflag=0,gflag=0,font_flag=1;
-GLdouble size=0.2;
-GLdouble mov=0.005;
+GLfloat xRotated, yRotated, zRotated, yTranslate, xTranslate,zTranslate=-10.0;
+//Variables used to track rotation about the coordinate axes, and translation along the axes from the origin
+
+
+int flag=1,rflag=0,bflag=0,gflag=0;  //flags for turning lights and rotation on an off
+
 int windowWidth=1000,windowHeight=1000;
 
-void onMouse(int button, int state, int x, int y);
+void onMouse(int button, int state, int x_clicked, int y_clicked); //Registering Mouse Function
 
 void initSurface()
 {
@@ -20,6 +22,8 @@ void initSurface()
     GLfloat material_diffuse[] = {0.90f, 0.90f, 0.90f};
     GLfloat material_specular[] = {0.90f, 0.90f, 0.90f};
     GLfloat material_shininess = 25.0f;
+
+   glShadeModel(GL_SMOOTH);     //Set shading
 
     /* load material properties */
     glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
@@ -29,7 +33,8 @@ void initSurface()
 }
 void initLights()
 {
-    /* define light properties */
+     /* define light properties : Diffuse to se the RGBA values of the lights
+                                : Position to assign the xyz coordinates of the lights */
     GLfloat light0_diffuse[] = {1.0, 0.0, 0.0, 1.0};
     GLfloat light0_position[] = {0.0, 1.0, 0.0, 0.0};
     GLfloat light1_diffuse[] = {0.0, 0.0, 1.0, 1.0};
@@ -39,12 +44,6 @@ void initLights()
 
     /* enable lights 0 and 1*/
     glEnable(GL_LIGHTING);
-
-
-// glLightf (GL_LIGHT1, GL_SPOT_CUTOFF, 15.0f);
-   // glEnable(GL_LIGHT0);
-   // glEnable(GL_LIGHT1);
-//glLightf (GL_LIGHT1, 10, 5.0f);
 
     /* load light properties */
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
@@ -81,7 +80,9 @@ void init()
 }
 
 
-void drawText(const char *text, int length,int x,int y)
+void drawText(const char *text, int length,int x_position,int y_position,int type_of_data)
+//Function to Draw text on the screen
+
 {
 glMatrixMode(GL_PROJECTION);
 double *matrix=new double[16];
@@ -92,16 +93,16 @@ glMatrixMode(GL_MODELVIEW);
 glLoadIdentity();
 glPushMatrix();
 glLoadIdentity();
-glRasterPos2i(x,y);
+glRasterPos2i(x_position,y_position);
 
-if(font_flag==1)
+if(type_of_data==1)
 {
     for(int i=0;i<length;i++)
     {
     glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,(int)text[i]);
     }
 
-    font_flag=0;
+
 }
 
 else
@@ -110,6 +111,8 @@ else
     {
     glutBitmapCharacter(GLUT_BITMAP_8_BY_13,(int)text[i]);
     }
+
+
 }
 
 
@@ -119,40 +122,34 @@ glLoadMatrixd(matrix);
 glMatrixMode(GL_MODELVIEW);
 
 }
-void display(void)
+void display(void)   //The main display fumction
 {
 
-
-
-    // glutSwapBuffers();
-
     glMatrixMode(GL_MODELVIEW);
-    // clear the drawing buffer.
-    // glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // clear the identity matrix.
-    glLoadIdentity();
-    // glEnable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
-    // glEnable(GL_LIGHT1);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear buffers
+
+    glLoadIdentity();  // clear the identity matrix.
+
     glutMouseFunc(onMouse);
-    // traslate the draw by z = -4.0
-    // Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
-    glTranslatef(xTranslate,yTranslate,zTranslate);
-    // Red color used to draw.
+
+    glTranslatef(xTranslate,yTranslate,zTranslate); // traslate the 3d object by x,y and z
+
     glColor3f(0.0, 0.0, 1.0);
-    // changing in transformation matrix.
-    // rotation about X axis
-    glRotatef(xRotated,1.0,0.0,0.0);
-    // rotation about Y axis
-    glRotatef(yRotated,0.0,1.0,0.0);
-    // rotation about Z axis
-    glRotatef(zRotated,0.0,0.0,1.0);
-    // scaling transfomation
-    glScalef(1.0,1.0,1.0);
-    // built-in (glut library) function , draw you a Teapot
-    glutSolidTeapot(size);
-    // Flush buffers to screen
+
+
+    glRotatef(xRotated,1.0,0.0,0.0);  // rotation about X axis
+
+    glRotatef(yRotated,0.0,1.0,0.0);// rotation about Y axis
+
+    glRotatef(zRotated,0.0,0.0,1.0);  // rotation about Z axis
+
+    glScalef(1.0,1.0,1.0);       // scaling transfomation
+
+   glutSolidDodecahedron(); // built-in (glut library) function , draws a Dodecahedron
+
+
+
      string text1="TEAPOT ANIMATION";
      string text2="Use W A S D for Horizontal movement";
      string text3="Use R G B to switch lights on and off";
@@ -160,19 +157,18 @@ void display(void)
      string text5="Press Y to turn rotation about Y-axis on and off";
      string text6="Use right and left clicks for vertical movement";
 
-        drawText(text1.data(),text1.size(),190,500);
-        drawText(text2.data(),text2.size(),10,100);
-        drawText(text3.data(),text3.size(),10,90);
-        drawText(text4.data(),text4.size(),10,80);
-        drawText(text5.data(),text5.size(),10,70);
-        drawText(text6.data(),text6.size(),10,60);
-        font_flag=1;
+        drawText(text1.data(),text1.size(),190,500,1);
+        drawText(text2.data(),text2.size(),10,100,0);
+        drawText(text3.data(),text3.size(),10,90,0);
+        drawText(text4.data(),text4.size(),10,80,0);		//Instructions to be printed on screen
+        drawText(text5.data(),text5.size(),10,70,0);
+        drawText(text6.data(),text6.size(),10,60,0);
 
 
 
-            glFlush();
-            // sawp buffers called because we are using double buffering
-            glutSwapBuffers();
+            glFlush(); 						// Flush buffers to screen
+
+            glutSwapBuffers();           			 // swap buffers called because we are using double buffering
         }
 
 void reshapeFunc(int x, int y)
@@ -182,9 +178,6 @@ void reshapeFunc(int x, int y)
     //Set a new projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    //Angle of view:40 degrees
-    //Near clipping plane distance: 0.5
-    //Far clipping plane distance: 20.0
 
 
     gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
@@ -196,13 +189,14 @@ void onMouse(int button, int state, int x, int y)
 {
 
     if ((state != GLUT_DOWN) && ((button!=GLUT_LEFT_BUTTON)||(button!=GLUT_RIGHT_BUTTON)))
-            return;
+            return;  //Returns if function is called when mouse click has not occured
 
     if(state==GLUT_DOWN)
                 if(button==GLUT_LEFT_BUTTON)
-                            yTranslate+=0.05;
+                            yTranslate+=0.05;  		 //Move vertically up on left click
                 else if(button==GLUT_RIGHT_BUTTON)
-                        yTranslate-=0.05;
+                        yTranslate-=0.05;     		//Move vertically down on right click
+
 
 
 
@@ -214,19 +208,19 @@ void idleFunc(void)
 
 
     if(flag)
-            yRotated+=1.5;
+            yRotated+=1.5;		 //Rotate about y-axis if flag is true
     if(rflag)
-            glEnable(GL_LIGHT0);
+            glEnable(GL_LIGHT0);         //Enable red lights
     else
-            glDisable(GL_LIGHT0);
+            glDisable(GL_LIGHT0);      //Disable red lights
     if(bflag)
-            glEnable(GL_LIGHT1);
+            glEnable(GL_LIGHT1);       //Enable blue lights
     else
-            glDisable(GL_LIGHT1);
+            glDisable(GL_LIGHT1);     //Disable blue lights
     if(gflag)
-            glEnable(GL_LIGHT2);
+            glEnable(GL_LIGHT2);     //Enable green lights
     else
-            glDisable(GL_LIGHT2);
+            glDisable(GL_LIGHT2);    //Disable green lights
 
 
 
@@ -239,16 +233,16 @@ void keyboard(unsigned char k, int x, int y)
     {
 
              case 'w': zTranslate-=0.05;
-                            break;
+                            break;         //Move forwards
 
             case 'a':   xTranslate-=0.05;
-                        break;
+                        break;   	   //Move left
 
             case 's':   zTranslate+=0.05;
-                            break;
+	                 break;		   //Move backwards
 
             case 'd':   xTranslate+=0.05;
-                            break;
+                            break; 	   //Move right
 
             case 'r':
                         if(rflag==1)
@@ -260,7 +254,7 @@ void keyboard(unsigned char k, int x, int y)
             case 'b':
                          if(bflag==1)
                             bflag=0;
-                        else
+                        else		    //Switching lights on and off
                             bflag=1;
                         break;
 
@@ -274,7 +268,7 @@ void keyboard(unsigned char k, int x, int y)
             case 'y':
                         if(flag==1)
                                 flag=0;
-                        else flag=1;
+                        else flag=1;	  //Switching rotation about y axix on and off
                         break;
             default : break;
 
@@ -283,7 +277,7 @@ void keyboard(unsigned char k, int x, int y)
 
 }
 
-void specialin(int arkey,int x, int y)
+void arrow_key(int arkey,int x, int y)
 {
 
     switch (arkey)
@@ -292,7 +286,7 @@ void specialin(int arkey,int x, int y)
                                 xRotated-=1.0;
                                 break;
 
-            case GLUT_KEY_DOWN:
+            case GLUT_KEY_DOWN:				 //Rotate about x axis
                                 xRotated+=1.0;
                                 break;
 
@@ -300,7 +294,8 @@ void specialin(int arkey,int x, int y)
                                 zRotated+=1.0;
                                 break;
 
-            case GLUT_KEY_RIGHT:
+            case GLUT_KEY_RIGHT:			//Rotate about z axis
+
                                 zRotated-=1.0;
                                 break;
 
@@ -315,30 +310,23 @@ int main (int argc, char **argv)
     glutInit(&argc, argv);
 
 
-    //double buffering used to avoid flickering problem in animation
-    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH | GLUT_RGBA);
-    // window size
-    glutInitWindowSize(windowWidth,windowHeight);
-    // create the window
-    glutCreateWindow("Teapot Rotating Animation");
-    // glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    glutSetCursor(GLUT_CURSOR_FULL_CROSSHAIR);
+
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH | GLUT_RGBA); //double buffering used to avoid flickering problem in animation
+
+    glutInitWindowSize(windowWidth,windowHeight);  // window size
+
+    glutCreateWindow("Teapot Rotating Animation");  // create the window
+    glutSetCursor(GLUT_CURSOR_FULL_CROSSHAIR);		//Set cursor style
 
     init();
-    //xRotated = 90.0;
-    // zRotated =30;
-    //zRotated = 0.0;
-    /*xRotated=33;
-     yRotated=40;
-    */
-    yTranslate = 0.0;
+
+    yTranslate = 0.0;		//Placing object at origin
     xTranslate = 0.0;
 
-    glClearColor(0.0,0.0,0.0,0.0);
-    glShadeModel(GL_SMOOTH);
-    //glEnable(GL_COLOR_MATERIAL);
+    glClearColor(0.0,0.0,0.0,0.0);  //Setting background colour
+
     //Assign  the function used in events
-    glutSpecialFunc(specialin);
+    glutSpecialFunc(arrow_key);
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
     glutReshapeFunc(reshapeFunc);

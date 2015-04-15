@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <cstdlib>
 #include <sstream>
-#include<cstring>
+#include <cstring>
 #include <algorithm>
 #include <sys/types.h>
 #include <unistd.h>
@@ -30,11 +30,12 @@ void drawText(char const *str,float x,float y)
     int len=strlen(str);
     glColor3f(0.0,0.0,1.0);
     glRasterPos2f(x,y);
+
     for(i=0;i<len;i++)
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,str[i]);
 }
-void container(){
-
+void Basket()
+{
     glColor3f(0.0, 0.3, 0.5);
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
@@ -48,11 +49,8 @@ void red_triangle_draw()
 {
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
-       // glColor3f(0.0, 1.0, 0.0);
         glVertex2d(0,0);
-       // glColor3f(1.0, 0.0, 0.0);
         glVertex2d(25,43);
-      //  glColor3f(0.0, 0.0, 1.0);
         glVertex2d(50, 0);
     glEnd();
 }
@@ -61,7 +59,6 @@ void blue_circle_draw()
 {
     glColor3f(0.0, 0.0, 1.0);
     glBegin(GL_POLYGON);
-
 
      for(int j=0;j<=360;++j)
       {
@@ -72,7 +69,7 @@ void blue_circle_draw()
     glEnd();
 }
 
-void sq()
+void Truck()
 {
     glLineWidth(3.0);
     glBegin(GL_POLYGON);
@@ -86,9 +83,6 @@ void sq()
         glVertex2d(100, 50);
     glEnd();
 }
-
-
-
 
 void wheel(int position)
 {
@@ -104,8 +98,7 @@ glBegin(GL_POLYGON);
   }
 
 glEnd();
-//glFlush();
-//glutSwapBuffers();
+
 }
 
 

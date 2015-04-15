@@ -14,7 +14,7 @@
 #include "Projectile.h"
 #include "Callbacks.h"
 #include "Figures.h"
-//#include "Declaration.h"
+#include "Declaration.h"
 
 using namespace std;
 
@@ -48,29 +48,26 @@ void choose_new_red_path()
         case 1:
             Red_Range=max_distance[9];
             choose_path_red=1;
-//            find_chosenX(1);
             break;
+
         case 2:
             Red_Range=max_distance[8];
             choose_path_red=2;
-         //   find_chosenX(2);
             break;
 
         case 3:
             Red_Range=max_distance[7];
             choose_path_red=3;
-         //   find_chosenX(3);
             break;
 
         case 4:
             Red_Range=max_distance[6];
             choose_path_red=4;
-         //   find_chosenX(4);
             break;
+
         case 5:
             Red_Range=max_distance[5];
             choose_path_red=5;
-      //      find_chosenX(5);
             break;
     }
 
@@ -81,75 +78,74 @@ void choose_new_red_path()
 void choose_new_blue_path()
 {
     Blue_Circle_Counter_Variable=20;
-        int k = rand()%5 + 1;
-        switch(k)
-        {
-            case 1:
-                Blue_Range=max_distance[4];
-                choose_path_blue=1;
-                break;
-            case 2:
-                Blue_Range=max_distance[3];
-                //color='b';
-                choose_path_blue=2;
-                break;
-            case 3:
-                Blue_Range=max_distance[2];
-               // color='b';
-                choose_path_blue=3;
-                break;
-            case 4:
-                Blue_Range=max_distance[1];
-               // color='b';
-                choose_path_blue=4;
-                break;
-            case 5:
-                Blue_Range=max_distance[0];
-               // color='b';
-                choose_path_blue=5;
-                break;
+    int k = rand()%5 + 1;
+    switch(k)
+    {
+        case 1:
+            Blue_Range=max_distance[4];
+            choose_path_blue=1;
+            break;
 
-        }
-        blue_clicked=false;
-        Blue_Circle_Counter_Variable=20;
+        case 2:
+            Blue_Range=max_distance[3];
+            choose_path_blue=2;
+            break;
+
+        case 3:
+            Blue_Range=max_distance[2];
+            choose_path_blue=3;
+            break;
+
+        case 4:
+            Blue_Range=max_distance[1];
+            choose_path_blue=4;
+            break;
+
+        case 5:
+            Blue_Range=max_distance[0];
+            choose_path_blue=5;
+            break;
+
+    }
+    blue_clicked=false;
+    Blue_Circle_Counter_Variable=20;
 }
 
 void Update_Red_Path()
 {
 
     if(Red_Triangle_Counter_Variable<Red_Range && red_caught==true)
-            {
-                choose_new_red_path();
-                Final_Score+=10;
-            }
-
-            else if(Red_Triangle_Counter_Variable<Red_Range)
-            {
-                Red_Triangle_Counter_Variable++;
-            }
-            else
-            {
-                choose_new_red_path();
-                Number_Of_Misses++;
-            }
+    {
+        choose_new_red_path();
+        Final_Score+=10;
+    }
+    else if(Red_Triangle_Counter_Variable<Red_Range)
+    {
+        Red_Triangle_Counter_Variable++;
+    }
+    else
+    {
+        choose_new_red_path();
+        Number_Of_Misses++;
+    }
 }
 
 void Update_Blue_Path()
 {
-            if(Blue_Circle_Counter_Variable<Blue_Range && blue_clicked==true)
-            {
-                choose_new_blue_path();
-                Final_Score+=20;
-            }
-            else if(Blue_Circle_Counter_Variable<Blue_Range)
-            {
-                Blue_Circle_Counter_Variable++;
-            }
-            else
-            {
-                choose_new_blue_path();
-                 Number_Of_Misses++;
-            }
+    if(Blue_Circle_Counter_Variable<Blue_Range && blue_clicked==true)
+    {
+        choose_new_blue_path();
+        Final_Score+=20;
+    }
+    else if(Blue_Circle_Counter_Variable<Blue_Range)
+    {
+        Blue_Circle_Counter_Variable++;
+    }
+    else
+    {
+        choose_new_blue_path();
+        Number_Of_Misses++;
+    }
 }
 
 void Update_Game_State_Miss()
