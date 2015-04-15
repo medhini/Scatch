@@ -1,31 +1,47 @@
-#include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
-#include <algorithm>
+#include <math.h>
 #include <vector>
-//#include "Declaration.h"
+#include <sys/time.h>
+#include <cstdlib>
+#include <sstream>
+#include<cstring>
+#include <algorithm>
+#include <sys/types.h>
+#include <unistd.h>
+#include <time.h>
+#include "Projectile.h"
+#include "Callbacks.h"
+#include "Figures.h"
+#include "Declaration.h"
+
+using namespace std;
+
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#define NENDS 2
+
+extern pair <float, float> Red_Path1[500];
+extern pair <float, float> Red_Path2[500];
+extern pair <float, float> Red_Path3[500];
+extern pair <float, float> Red_Path4[500];
+extern pair <float, float> Red_Path5[500];
+extern pair <float, float> Blue_Path1[500];
+extern pair <float, float> Blue_Path2[500];
+extern pair <float, float> Blue_Path3[500];
+extern pair <float, float> Blue_Path4[500];
+extern pair <float, float> Blue_Path5[500];
 
 float g=9.8;
 #define PI 3.14159265
 
-using namespace std;
-
-pair <int, int> Red_Path1[500];
-pair <int, int> Red_Path2[500];
-pair <int, int> Red_Path3[500];
-pair <int, int> Red_Path4[500];
-pair <int, int> Red_Path5[500];
-pair <int, int> Blue_Path1[500];
-pair <int, int> Blue_Path2[500];
-pair <int, int> Blue_Path3[500];
-pair <int, int> Blue_Path4[500];
-pair <int, int> Blue_Path5[500];
-
-vector <int> max_distance;
-
+extern vector<int> max_distance;
 void Calculate_Path(float u, float theta, int max_dist, int case_num) //Creates the 10 paths
 {
-
 
     float time_of_flight = 2*u*sin(theta)/g;
     float delta_time = time_of_flight/max_dist;
@@ -167,9 +183,4 @@ void Generate_U_Theta()
             j++;
         }
     }
-    //cout<<max_distance[9]<<endl;
-    /*for(int i=0; i<100; i++)
-    {
-        cout<<Red_Path1[i].first<<" "<<Red_Path1[i].second<<endl;
-    }*/
 }

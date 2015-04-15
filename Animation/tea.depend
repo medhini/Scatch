@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1429094734 source:/home/shreya/Documents/tea/main.cpp
+	<GL/glut.h>
+	<stdio.h>
+	<iostream>
+	<stdlib.h>
+
