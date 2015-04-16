@@ -78,6 +78,7 @@ void game_screen()
     wheel(40);
     move_container();
 
+    glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_LINE_STRIP);
         glVertex2d(1000,600);
         glVertex2d(1180,600);
@@ -102,6 +103,7 @@ void game_screen()
     string head4 = string_miss.str();
     drawText(head4.data(),1140,620);
 
+    glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_LINE_STRIP);
         glVertex2d(800,600);
         glVertex2d(1000,600);

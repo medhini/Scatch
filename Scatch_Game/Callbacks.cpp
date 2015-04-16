@@ -40,27 +40,32 @@ void readapixel(int x, int y) //Reads the color of the coordinates detected on m
      float color[3];
      glReadPixels(x, height - y - 1, 1, 1, GL_RGB, GL_FLOAT, color);
 
-     if(color[0]==0 && color[1]==0 && color[2]==1)
+     if(color[0]==0 && color[1]==0 && color[2]==1 && height - y - 1<400)
         blue_clicked = true;
 }
 
 void onMouse(int button, int state, int x, int y) //Mouse Call Back Question
 {
-    switch(button)
+    switch(game_state)
     {
-        case GLUT_LEFT_BUTTON:
-            if(state==GLUT_DOWN)
+        case 1:
+            switch(button)
             {
-                readapixel(x,y);
+                case GLUT_LEFT_BUTTON:
+                    if(state==GLUT_DOWN)
+                    {
+                        readapixel(x,y);
+                    }
+                    break;
+
+                case GLUT_RIGHT_BUTTON:
+                    if(state==GLUT_DOWN)
+                        exit(0);
+                    break;
+
+                default:
+                    break;
             }
-            break;
-
-        case GLUT_RIGHT_BUTTON:
-            if(state==GLUT_DOWN)
-                exit(0);
-            break;
-
-        default:
             break;
     }
 }
